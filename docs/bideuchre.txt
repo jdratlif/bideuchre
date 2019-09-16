@@ -1,0 +1,74 @@
+--------------------------------------------------------------------------------
+| Bid Euchre 0.70
+| Copyright (C) 2005 John Ratliff
+| http://bideuchre.sourceforge.net/
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+| 1.0 Introduction
+--------------------------------------------------------------------------------
+
+  Welcome to Bid Euchre. Bid Euchre is a variation on traditional Euchre played
+  mainly in the midwestern United States. This particular variant is played in
+  Bloomington, Indiana, USA. You can read the rules of our version in
+  rules.html.
+  
+--------------------------------------------------------------------------------
+| 2.0 Playing Bid Euchre
+--------------------------------------------------------------------------------
+
+  Bid Euchre has two modes, text and graphical. Graphical is the default and
+  preferred mode, but if you are on a text console, you can use the text
+  version. Or maybe you just want to see what it's like.
+  
+  The graphical version has two advantages over the text version (besides the
+  fact it has graphics). First, you cannot signal your teammates in text mode.
+  Second, the graphical mode has a cheat mode whereby you can see all the
+  players cards. This is really more for debugging purposes, but it's an
+  advantage to be sure.
+  
+  To use the text mode, start the program with ./bideuchre --text. For graphical
+  mode, just use ./bideuchre or double-click the icon. The interface is fairly
+  intuitive, but the graphical interface is described in more detail in
+  bideuchre.html. You can view this from inside the program from the Help menu.
+  
+--------------------------------------------------------------------------------
+| 3.0 Building from Source
+--------------------------------------------------------------------------------
+
+  Bid Euchre is an open source program, which means you can compile it for your
+  platform if you like.
+  
+  Bid Euchre uses wxWidgets to achieve cross-platform capability. This means it
+  should run on Windows, Mac OS-X, and any platform that uses the GTK toolkit
+  (Linux and Solaris, just to name a couple).
+  
+  If you want to build from source, you will need wxWidgets >= 2.6.1. You can
+  get this from http://www.wxwidgets.org/.
+  
+  After you have the wxWidgets library installed, you can compile Bid Euchre. It
+  is a standard GNU configure system.
+  
+  ./configure && make
+  
+  Don't use make install as it won't install the images. The images must be
+  in a subdirectory below the executable. I hope to have a better installation
+  solution for Unix soon.
+  
+  If you're building on Windows, I suggest MinGW with msys.
+  
+--------------------------------------------------------------------------------
+| 4.0 Contact Information
+--------------------------------------------------------------------------------
+
+  The author, John Ratliff, can be contacted via email at
+  webmaster (AT) technoplaza.net (replace the (AT) with the @ sign). You can
+  also use my online feedback form at http://www.technoplaza.net/feedback.php
+  
+--------------------------------------------------------------------------------
+| 5.0 License Information
+--------------------------------------------------------------------------------
+
+  Bid Euchre is licensed under the GNU GPL. It is free software under that
+  license. You can read the full text of the license in the docs directory in
+  the file license.txt. Learn more at http://www.gnu.org/.

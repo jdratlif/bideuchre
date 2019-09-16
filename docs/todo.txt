@@ -1,0 +1,23 @@
+--------------------------------------------------------------------------------
+| todo list for Bid Euchre
+--------------------------------------------------------------------------------
+
+major issues
+  - no network play
+
+minor issues
+  - hard to distinguish spades/clubs (maybe change card images)
+  - no program icon
+  
+AI issues
+  - take trick with trump should take with lowest trump if last player
+  - don't count the double ace in suited trump as two tricks
+  - don't lead double ace in suited trump
+  - maybe shouldn't bid 6 w/o a right
+  - maybe shouldn't bid 8 w/o real power. Bid Best instead maybe.
+  - can't bid best
+  - AI doesn't understand signals
+  - examine other players bids while bidding
+
+$Id: todo.txt,v 1.26 2005/08/01 10:12:11 technoplaza Exp $
+
