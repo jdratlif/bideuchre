@@ -61,7 +61,7 @@ public:
      *
      * @param id The player ID.
      */
-    Player::Player(int id);
+    Player(int id);
     
     /**
      * Creates a new Player.

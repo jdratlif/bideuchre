@@ -75,7 +75,7 @@ BidEuchreApp::~BidEuchreApp() {
 
 bool BidEuchreApp::OnInit() {
     if (argc == 2) {
-        if (strcmp(argv[1], "--text") == 0) {
+        if (strcmp(argv[1].c_str(), "--text") == 0) {
             Game &game = Game::instance();
             TextUI tui;
             Bridge bridge;
