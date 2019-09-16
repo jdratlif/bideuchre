@@ -149,7 +149,7 @@ void GUIPlayer::bid(BidHistory &bids) {
     
     wxCommandEvent event(EVT_BID_DIALOG, panel->GetId());
     event.SetEventObject(panel);
-    panel->AddPendingEvent(event);
+    panel->GetEventHandler()->AddPendingEvent(event);
     
     mutex->Lock();
     

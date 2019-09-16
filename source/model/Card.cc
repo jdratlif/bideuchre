@@ -113,7 +113,9 @@ wxImage Card::toImage() const {
 }
 
 const wxImage &Card::getBackImage() {
-    if (backside == wxNullImage) {
+	static bool init = false;
+
+    if (!init) {
         #ifdef __WXOSX__
             wxFileName fn(wxStandardPaths::Get().GetDataDir(), wxT("card.bmp"));
         #else
@@ -122,7 +124,10 @@ const wxImage &Card::getBackImage() {
         
         fn.AppendDir(wxT("images"));
         backside = wxImage(fn.GetFullPath(), wxBITMAP_TYPE_BMP);
-    }
+	}
+	else {
+		init = true;
+	}
     
     return backside;
 }

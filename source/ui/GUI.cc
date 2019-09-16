@@ -64,7 +64,7 @@ void GUI::endRound() {
     
     wxCommandEvent event(EVT_SCORE_DIALOG, panel->GetId());
     event.SetEventObject(panel);
-    panel->AddPendingEvent(event);
+    panel->GetEventHandler()->AddPendingEvent(event);
     
     Game::instance().setPause();
 }

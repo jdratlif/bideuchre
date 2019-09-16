@@ -57,8 +57,8 @@ BidEuchreApp::BidEuchreApp() {
     mutex = new wxMutex();
     cond = new wxCondition(*mutex);
     
-    APP_NAME = new wxString(wxT(PACKAGE_NAME));
-    APP_VERSION = new wxString(wxT(PACKAGE_VERSION));
+    APP_NAME = new wxString(wxT("bideuchre"));
+    APP_VERSION = new wxString(wxT("0.73a"));
     APP_COPYRIGHT = new wxString(wxT("Copyright (C) 2005 John David Ratliff"));
     APP_URL = new wxString(wxT("http://bideuchre.sourceforge.net/"));
 }
