@@ -19,5 +19,5 @@ AI issues
   - AI doesn't understand signals
   - examine other players bids while bidding
 
-$Id: todo.txt,v 1.26 2005/08/01 10:12:11 technoplaza Exp $
+$Id: todo.txt,v 1.1.1.1 2005/08/06 09:52:49 technoplaza Exp $
 

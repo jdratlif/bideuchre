@@ -1,7 +1,7 @@
 /*
  * Bid Euchre
  * Copyright (C) 2005 John David Ratliff
- * http://bideuchre.sourceforge.net/
+ * http://games.technoplaza.net/
  *
  * This file is part of Bid Euchre.
  *
@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: GUIPlayer.cc,v 1.16 2005/08/01 09:20:21 technoplaza Exp $
+// $Id: GUIPlayer.cc,v 1.2 2005/08/06 10:43:33 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -129,7 +129,6 @@ void GUIPlayer::playCard(Trick &trick) {
             str = name + wxT(": Must follow suit!");
             panel->setMessage(str);
             panel->Refresh(false);
-            panel->Update();
         }
         
         panel->requestClicks();
@@ -172,13 +171,9 @@ void GUIPlayer::giveLonerCard(const Bid &bid) {
     
     panel->requestClicks(&clicks);
     
-    panel->Refresh(false);
-    panel->Update();
-    
     wxString str = name + wxT(": Give Best ") + BEST_NAMES[bid.getTrump()];
     panel->setMessage(str);
     panel->Refresh(false);
-    panel->Update();
     
     std::pair<int, bool> pair = getCard();
     int card = pair.first;
@@ -204,7 +199,6 @@ void GUIPlayer::discard(const Bid &) {
     wxString str = name + wxT(": Choose Two Discards");
     panel->setMessage(str);
     panel->Refresh(false);
-    panel->Update();
     
     while (hand.size() > 8) {
         std::pair<int, bool> pair = getCard();
@@ -217,7 +211,6 @@ void GUIPlayer::discard(const Bid &) {
         hand.remove(card);
         
         panel->Refresh(false);
-        panel->Update();
     }
     
     panel->requestClicks();

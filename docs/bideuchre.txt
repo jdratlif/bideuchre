@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
-| Bid Euchre 0.70
+| Bid Euchre 0.71
 | Copyright (C) 2005 John Ratliff
-| http://bideuchre.sourceforge.net/
+| http://games.technoplaza.net/
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
@@ -35,6 +35,10 @@
 --------------------------------------------------------------------------------
 | 3.0 Building from Source
 --------------------------------------------------------------------------------
+
+  I have provided binaries for Windows, x86 Linux (GTK+ 1.2 and 2.0), and
+  PPC Mac OS-X. You may wish to try one of these binary versions rather than
+  compile the source yourself.
 
   Bid Euchre is an open source program, which means you can compile it for your
   platform if you like.
@@ -72,3 +76,4 @@
   Bid Euchre is licensed under the GNU GPL. It is free software under that
   license. You can read the full text of the license in the docs directory in
   the file license.txt. Learn more at http://www.gnu.org/.
+

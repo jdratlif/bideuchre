@@ -1,7 +1,7 @@
 /*
  * Bid Euchre
  * Copyright (C) 2005 John David Ratliff
- * http://bideuchre.sourceforge.net/
+ * http://games.technoplaza.net/
  *
  * This file is part of Bid Euchre.
  *
@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: AIPlayer.hh,v 1.3 2005/08/01 03:52:05 technoplaza Exp $
+// $Id: AIPlayer.hh,v 1.1.1.1 2005/08/06 09:52:50 technoplaza Exp $
 
 #ifndef _AIPLAYER_HH_
 #define _AIPLAYER_HH_

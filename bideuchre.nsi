@@ -2,13 +2,13 @@
 ; bideuchre.nsi
 ; NSIS Installer Script for Bid Euchre
 ;
-; $Id: bideuchre.nsi,v 1.2 2005/08/01 13:27:52 technoplaza Exp $
+; $Id: bideuchre.nsi,v 1.2 2005/08/06 11:03:53 technoplaza Exp $
 ;-------------------------------------------------------------------------------
 
 !include "MUI.nsh"
 
 Name "Bid Euchre"
-OutFile "bideuchre-0.70.exe"
+OutFile "bideuchre-0.71.exe"
 InstallDir "$PROGRAMFILES\Bid Euchre"
 
 !define MUI_ABORTWARNING
@@ -30,7 +30,6 @@ Var SM_FOLDER
 Section "Bid Euchre"
     SetOutPath $INSTDIR
     File source\bideuchre.exe
-    File c:\MinGW\bin\mingwm10.dll
     
     SetOutPath "$INSTDIR\images"
     File source\images\*.bmp

@@ -1,7 +1,7 @@
 /*
  * Bid Euchre
  * Copyright (C) 2005 John David Ratliff
- * http://bideuchre.sourceforge.net/
+ * http://games.technoplaza.net/
  *
  * This file is part of Bid Euchre.
  *
@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: BidEuchreApp.cc,v 1.21 2005/07/31 23:31:07 technoplaza Exp $
+// $Id: BidEuchreApp.cc,v 1.1.1.1 2005/08/06 09:52:49 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -60,7 +60,7 @@ BidEuchreApp::BidEuchreApp() {
     APP_NAME = new wxString(wxT(PACKAGE_NAME));
     APP_VERSION = new wxString(wxT(PACKAGE_VERSION));
     APP_COPYRIGHT = new wxString(wxT("Copyright (C) 2005 John David Ratliff"));
-    APP_URL = new wxString(wxT("http://bideuchre.sourceforge.net/"));
+    APP_URL = new wxString(wxT("http://games.technoplaza.net/"));
 }
 
 BidEuchreApp::~BidEuchreApp() {

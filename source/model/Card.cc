@@ -1,7 +1,7 @@
 /*
  * Bid Euchre
  * Copyright (C) 2005 John David Ratliff
- * http://bideuchre.sourceforge.net/
+ * http://games.technoplaza.net/
  *
  * This file is part of Bid Euchre.
  *
@@ -20,13 +20,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: Card.cc,v 1.13 2005/08/01 09:17:37 technoplaza Exp $
+// $Id: Card.cc,v 1.3 2005/08/06 11:29:37 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
 #endif
 
+#include <wx/filename.h>
 #include <wx/image.h>
+
+#ifdef __WXOSX__
+    #include <wx/stdpaths.h>
+#endif
 
 #include "model/Card.hh"
 
@@ -93,15 +98,30 @@ bool Card::isBower(enum Suit trump, enum Bower bower) const {
 }
 
 wxImage Card::toImage() const {
-    wxString str = wxT("images/");
+    wxString str;
     str << face << wxT('-') << suit << wxT(".bmp");
     
-    return wxImage(str, wxBITMAP_TYPE_BMP);
+    #ifdef _WXOSX_
+        wxFileName fn(wxStandardPaths::Get().GetDataDir(), str);
+    #else
+        wxFileName fn(str);
+    #endif
+
+    fn.AppendDir(wxT("images"));
+    
+    return wxImage(fn.GetFullPath(), wxBITMAP_TYPE_BMP);
 }
 
 const wxImage &Card::getBackImage() {
     if (backside == wxNullImage) {
-        backside = wxImage("images/card.bmp", wxBITMAP_TYPE_BMP);
+        #ifdef __WXOSX__
+            wxFileName fn(wxStandardPaths::Get().GetDataDir(), wxT("card.bmp"));
+        #else
+            wxFileName fn(wxT("card.bmp"));
+        #endif
+        
+        fn.AppendDir(wxT("images"));
+        backside = wxImage(fn.GetFullPath(), wxBITMAP_TYPE_BMP);
     }
     
     return backside;
