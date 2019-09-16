@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: GamePanel.cc,v 1.3 2005/08/08 12:00:37 technoplaza Exp $
+// $Id: GamePanel.cc,v 1.5 2005/08/26 22:46:08 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -33,7 +33,12 @@
 #endif
 
 #include <wx/dcbuffer.h>
+#include <wx/filename.h>
 #include <wx/image.h>
+
+#ifdef __WXOSX__
+    #include <wx/stdpaths.h>
+#endif
 
 #include "AppConstants.hh"
 #include "model/Play.hh"
@@ -226,16 +231,24 @@ void GamePanel::drawBid(wxBufferedPaintDC &dc) {
         
         if ((trump != LOW) && (trump != HIGH)) {
             if (trump == SPADES) {
-                str = wxT("images/spade.bmp");
+                str = wxT("spade.bmp");
             } else if (trump == DIAMONDS) {
-                str = wxT("images/diamond.bmp");
+                str = wxT("diamond.bmp");
             } else if (trump == CLUBS) {
-                str = wxT("images/club.bmp");
+                str = wxT("club.bmp");
             } else if (trump == HEARTS) {
-                str = wxT("images/heart.bmp");
+                str = wxT("heart.bmp");
             }
             
-            wxImage image(str, wxBITMAP_TYPE_BMP);
+            #ifdef __WXOSX__
+                wxFileName fn(wxStandardPaths::Get().GetDataDir(), str);
+            #else
+                wxFileName fn(str);
+            #endif
+            
+            fn.AppendDir(wxT("images"));
+
+            wxImage image(fn.GetFullPath(), wxBITMAP_TYPE_BMP);
             wxBitmap bmp(image);
             dc.DrawBitmap(bmp, 650, 455, false);
         }

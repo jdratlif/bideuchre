@@ -20,14 +20,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: UIConstants.hh,v 1.1.1.1 2005/08/06 09:52:53 technoplaza Exp $
+// $Id: UIConstants.hh,v 1.2 2005/08/23 15:53:38 technoplaza Exp $
 
 #ifndef _UICONSTANTS_HH_
 #define _UICONSTANTS_HH_
 
 #define FRAME_STYLE wxCAPTION | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxCLOSE_BOX
 #define FRAME_TITLE wxT("Bid Euchre")
-#define FRAME_SIZE wxSize(706, 552)
 #define PANEL_STYLE wxSUNKEN_BORDER | wxTAB_TRAVERSAL
 #define SCORE_DIALOG_STYLE wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX
 #define SCORE_DIALOG_TITLE wxT("Score")

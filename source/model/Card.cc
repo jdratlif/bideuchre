@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: Card.cc,v 1.3 2005/08/06 11:29:37 technoplaza Exp $
+// $Id: Card.cc,v 1.6 2005/08/26 22:38:11 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -101,7 +101,7 @@ wxImage Card::toImage() const {
     wxString str;
     str << face << wxT('-') << suit << wxT(".bmp");
     
-    #ifdef _WXOSX_
+    #ifdef __WXOSX__
         wxFileName fn(wxStandardPaths::Get().GetDataDir(), str);
     #else
         wxFileName fn(str);

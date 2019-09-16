@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-| Bid Euchre 0.72
+| Bid Euchre 0.73
 | Copyright (C) 2005 John Ratliff
 | http://bideuchre.sourceforge.net/
 --------------------------------------------------------------------------------
@@ -64,17 +64,26 @@
 --------------------------------------------------------------------------------
 | 4.0 Revision History
 --------------------------------------------------------------------------------
+  
+  Version 0.73 - Tuesday, August 23, 2005
+    - AI trumps with lowest card if suit hasn't been lead before
+    - AI no longer leads double-ace (or nine) if another ace/nine is present
+    - AI now leads highest card in 'best' bid every time
+    - Fixed bug on Mac OS-X where images wouldn't be displayed
+    - Fixed bug where window was bigger than normal on non Windows XP platforms
 
-  Version 0.72 - August 9, 2005
+  Version 0.72 - Tuesday, August 9, 2005
     - fixed Windows installer to include necessary DLLs
     - fixed the homepage URL
     - AI Player now takes trick with lowest trump if last player
+    - AI Player can now bid 'best'
+    - AI Player will no longer bid 6 without a right bower
   
-  Version 0.71 - August 6, 2005
+  Version 0.71 - Sunday, August 6, 2005
     - removed useless calls to Update()
     - added Mac OS-X binaries
   
-  Version 0.70 - August 2, 2005
+  Version 0.70 - Tuesday, August 2, 2005
     - initial public release
   
 --------------------------------------------------------------------------------

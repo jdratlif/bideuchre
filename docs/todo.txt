@@ -8,14 +8,17 @@ major issues
 minor issues
   - hard to distinguish spades/clubs (maybe change card images)
   - no program icon
+  - should be able to open the scorepad from the menu
+  - allow the AI to take over for the human player at will
   
 AI issues
   - if you know subsequent players can't overtake you, use lowest card
   - don't count the double ace in suited trump as two tricks
-  - don't lead double ace in suited trump
   - AI doesn't understand signals (making or receiving)
   - examine other players bids while bidding
-  - trump low if it's first time lead
+  - shouldn't overtrump partner unless REALLY necessary
+  - don't trump with the right unless you MUST
+  - when throwing off, prefer higher losers to losers with aces
 
-$Id: todo.txt,v 1.3 2005/08/08 10:22:58 technoplaza Exp $
+$Id: todo.txt,v 1.7 2005/08/11 08:32:50 technoplaza Exp $
 

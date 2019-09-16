@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: AIPlayer.hh,v 1.4 2005/08/09 04:03:52 technoplaza Exp $
+// $Id: AIPlayer.hh,v 1.6 2005/08/11 08:28:44 technoplaza Exp $
 
 #ifndef _AIPLAYER_HH_
 #define _AIPLAYER_HH_
@@ -29,12 +29,15 @@
 
 #include "engine/Player.hh"
 
+class RoundHistory;
 class Trick;
 
 class AIPlayer : public Player {
 private:
     std::vector<int> plays;
     const Trick *trick;
+    
+    static RoundHistory &history;
 
     /**
      * Scores a Card according to trump.
@@ -85,9 +88,9 @@ private:
     bool findTake();
     
     /**
-     * Finds all the playable loser cards.
+     * Finds all the playable cards.
      */
-    void findLoser();
+    void findPlayable();
     
     /**
      * Selects the index of the lowest scored card from the play vector.
@@ -109,6 +112,13 @@ private:
      * @return The card index.
      */
     int selectBestLead();
+    
+    /**
+     * Selects the index of the lowest trump card.
+     *
+     * @return The card index.
+     */
+    int selectLowestTrump();
     
     /**
      * Counts the number of bowers in this AIPlayer's hand.

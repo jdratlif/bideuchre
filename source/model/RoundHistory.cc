@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: RoundHistory.cc,v 1.1 2005/08/08 12:00:37 technoplaza Exp $
+// $Id: RoundHistory.cc,v 1.4 2005/08/11 08:28:44 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -28,13 +28,33 @@
 
 #include "model/RoundHistory.hh"
 
-RoundHistory *RoundHistory::singleton = new RoundHistory();
+RoundHistory *RoundHistory::singleton = NULL;
 
-void RoundHistory::reset() {
-    played.clear(); 
+RoundHistory &RoundHistory::instance() {
+    if (singleton == NULL) {
+        singleton = new RoundHistory;
+    }
+    
+    return *singleton;
+}
+
+void RoundHistory::startRound() {
+    played.clear();
+    lead = 0;
+}
+
+void RoundHistory::startTrick(const Trick *trick) {
+    this->trick = trick;
+    plays = 0;
+}
+
+void RoundHistory::endTrick() {
+    lead |= (1 << trick->getLead().getSuit(trick->getBid().getTrump()));
 }
 
 void RoundHistory::add(const Play &play) {
+    // add the card to the played vector
     played.push_back(play.getCard());
+    ++plays;
 }
 

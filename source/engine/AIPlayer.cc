@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: AIPlayer.cc,v 1.5 2005/08/09 04:03:52 technoplaza Exp $
+// $Id: AIPlayer.cc,v 1.8 2005/08/11 08:28:43 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -30,8 +30,11 @@
 
 #include "model/Bid.hh"
 #include "model/BidHistory.hh"
+#include "model/RoundHistory.hh"
 #include "engine/AIPlayer.hh"
 #include "engine/Trick.hh"
+
+RoundHistory &AIPlayer::history = RoundHistory::instance();
 
 int AIPlayer::score(const Card &card, enum Suit trump) {
     int score = 0;
@@ -141,7 +144,7 @@ bool AIPlayer::findTake() {
     return found;
 }
 
-void AIPlayer::findLoser() {
+void AIPlayer::findPlayable() {
     for (unsigned int i = 0; i < hand.size(); i++) {
         if (isValidPlay(hand[i], *trick)) {
             plays.push_back(i);
@@ -192,28 +195,59 @@ int AIPlayer::selectBestLead() {
     // then high cards (aces or nines if no-trump low)
     for (unsigned int i = 0; i < plays.size(); i++) {
         if (hand[plays[i]].getFace() == ((trump == LOW) ? NINE : ACE)) {
-            return plays[i];
+            if (!history.hasLead(hand[plays[i]].getSuit()) ||
+                ((i + 1) >= plays.size())) {
+                return plays[i];
+            }
         }
     }
     
     return -1;
 }
 
+int AIPlayer::selectLowestTrump() {
+    enum Suit trump = trick->getBid().getTrump();
+    int index = -1, lowest = 9999;
+    
+    for (unsigned int i = 0; i < plays.size(); i++) {
+        if (hand[plays[i]].getSuit(trump) == trump) {
+            int score = this->score(hand[plays[i]], trump);
+            
+            if (score < lowest) {
+                lowest = score;
+                index = plays[i];
+            }
+        }
+    }
+    
+    return index;
+}
+
 void AIPlayer::playCard(Trick &trick) {
+    enum Suit trump = trick.getBid().getTrump();
     int card = -1;
     
     this->trick = &trick;
     plays.clear();
     
     if (trick.isFirstPlayer()) {
-        findLead();
-        card = selectBestLead();
+        if ((trick.getBid().getPlayer()->getID() == id) && 
+            trick.getBid().isAlone()) {
+            card = selectHighest();
+        } else {
+            findLead();
+            card = selectBestLead();
+        }
     } else {
         if (shouldTake()) {
             if (findTake()) {
                 if (trick.isLastPlayer()) {
                     card = selectLowest();
-                } else {
+                } else if (!history.hasLead(trick.getLead().getSuit(trump))) {
+                    card = selectLowestTrump();
+                }
+                
+                if (card == -1) {
                     card = selectHighest();
                 }
             }
@@ -221,7 +255,7 @@ void AIPlayer::playCard(Trick &trick) {
     }
     
     if (card == -1) {
-        findLoser();
+        findPlayable();
         card = selectLowest();
     }
     

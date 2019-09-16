@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: RoundHistory.hh,v 1.1 2005/08/08 12:00:37 technoplaza Exp $
+// $Id: RoundHistory.hh,v 1.4 2005/08/11 08:28:44 technoplaza Exp $
 
 #ifndef _ROUNDHISTORY_HH_
 #define _ROUNDHISTORY_HH_
@@ -37,6 +37,9 @@
 class RoundHistory {
 private:
     std::vector<Card> played;
+    const Trick *trick;
+    int plays;
+    unsigned char lead;
     
     static RoundHistory *singleton;
     
@@ -53,12 +56,24 @@ private:
     RoundHistory();
     
     /**
-     * Resets this RoundHistory.
+     * Called when a new Round is started.
      */
-    void reset();
+    void startRound();
     
     /**
-     * Adds a Play to this RoundHistory.
+     * Called when a new Trick is started.
+     *
+     * @param trick The Trick.
+     */
+    void startTrick(const Trick *trick);
+    
+    /**
+     * Called when a Trick has ended.
+     */
+    void endTrick();
+    
+    /**
+     * Called when a new Play is made.
      *
      * @param play The Play.
      */
@@ -73,11 +88,20 @@ public:
      * Gets the singleton RoundHistory instance.
      */
     static RoundHistory &instance();
+    
+    /**
+     * Checks if a suit has been lead.
+     *
+     * @param suit The suit to check for.
+     *
+     * @return true if the suit has been lead; false otherwise.
+     */
+    bool hasLead(enum Suit suit);
 };
 
 inline RoundHistory::RoundHistory() {}
 inline RoundHistory::~RoundHistory() { delete singleton; }
-inline RoundHistory &RoundHistory::instance() { return *singleton; }
+inline bool RoundHistory::hasLead(enum Suit suit) { return (lead & (1 << suit)); }
 
 #endif
 

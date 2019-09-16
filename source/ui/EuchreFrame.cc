@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: EuchreFrame.cc,v 1.1.1.1 2005/08/06 09:52:51 technoplaza Exp $
+// $Id: EuchreFrame.cc,v 1.2 2005/08/23 15:53:38 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -50,7 +50,7 @@ END_EVENT_TABLE()
 
 EuchreFrame::EuchreFrame() {
     Create(NULL, ID_FRAME, FRAME_TITLE, wxDefaultPosition,
-           FRAME_SIZE, FRAME_STYLE);
+           wxDefaultSize, FRAME_STYLE);
     CreateControls();
     Centre();
 }
@@ -60,7 +60,11 @@ void EuchreFrame::CreateControls() {
     
     wxMenu *fileMenu = new wxMenu;
     fileMenu->Append(IDM_FILE_NEWGAME, wxT("&New Game\tCtrl-N"));
-    fileMenu->AppendSeparator();
+    
+    #ifndef __WXOSX__
+        fileMenu->AppendSeparator();
+    #endif
+    
     fileMenu->Append(wxID_EXIT, wxT("E&xit"));
     menuBar->Append(fileMenu, wxT("&File"));
     
@@ -71,7 +75,11 @@ void EuchreFrame::CreateControls() {
     wxMenu *helpMenu = new wxMenu;
     helpMenu->Append(IDM_HELP_PLAY, wxT("How to Play"));
     helpMenu->Append(IDM_HELP_RULES, wxT("Bid Euchre Rules"));
-    helpMenu->AppendSeparator();
+    
+    #ifndef __WXOSX__
+        helpMenu->AppendSeparator();
+    #endif
+    
     helpMenu->Append(wxID_ABOUT, wxT("&About"));
     menuBar->Append(helpMenu, wxT("&Help"));
     

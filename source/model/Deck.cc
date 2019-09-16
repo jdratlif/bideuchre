@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: Deck.cc,v 1.1.1.1 2005/08/06 09:52:51 technoplaza Exp $
+// $Id: Deck.cc,v 1.2 2005/08/10 12:03:56 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -43,7 +43,7 @@ Deck::Deck() {
 
 void Deck::shuffle() {
     for (int i = 0; i < 48; i++) {
-        int j = rand() % 48;
+        int j = rand() / ((RAND_MAX / 48) + 1);
         
         Card temp = deck[i];
         deck[i] = deck[j];

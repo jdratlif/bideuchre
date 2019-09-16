@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: BidEuchreApp.cc,v 1.2 2005/08/08 12:00:36 technoplaza Exp $
+// $Id: BidEuchreApp.cc,v 1.4 2005/08/23 15:53:38 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -123,7 +123,10 @@ bool BidEuchreApp::OnInit() {
     }
     
     EuchreFrame *frame = new EuchreFrame;
+    frame->SetClientSize(700, 500);
+    frame->Centre();
     frame->Show(true);
+    
     SetTopWindow(frame);
     
     return true;

@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: Round.cc,v 1.2 2005/08/08 12:00:37 technoplaza Exp $
+// $Id: Round.cc,v 1.4 2005/08/11 00:07:04 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -75,13 +75,15 @@ void Round::bid(int first) {
 }
 
 void Round::start() {
+    RoundHistory &history = RoundHistory::instance();
     const Bid &winning = bids.getWinning();
     int first = winning.getPlayer()->getID();
     
-    RoundHistory::instance().reset();
+    history.startRound();
 
     for (int i = 0; i < 8; i++) {
         Trick trick(bridge, winning, first);
+        history.startTrick(&trick);
         
         for (int j = 0; j < 6; j++) {
             int next = (first + j) % 6;
@@ -106,6 +108,7 @@ void Round::start() {
         first = winner.getPlay().getPlayer()->getID();
         tricks[first % 2]++;
         
+        history.endTrick();
         bridge->endTrick();
     }
 }

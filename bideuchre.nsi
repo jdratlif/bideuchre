@@ -2,13 +2,13 @@
 ; bideuchre.nsi
 ; NSIS Installer Script for Bid Euchre
 ;
-; $Id: bideuchre.nsi,v 1.2 2005/08/06 11:03:53 technoplaza Exp $
+; $Id: bideuchre.nsi,v 1.4 2005/08/12 11:56:19 technoplaza Exp $
 ;-------------------------------------------------------------------------------
 
 !include "MUI.nsh"
 
 Name "Bid Euchre"
-OutFile "bideuchre-0.72.exe"
+OutFile "bideuchre-0.73.exe"
 InstallDir "$PROGRAMFILES\Bid Euchre"
 
 !define MUI_ABORTWARNING

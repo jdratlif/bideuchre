@@ -1,3 +1,3 @@
-EXTRA_DIST = bideuchre.nsi Doxyfile Info.plist apidocs docs/*.txt docs/*.html
+EXTRA_DIST = bideuchre.nsi Info.plist Doxyfile apidocs docs/*.txt docs/*.html
 SUBDIRS = source
 
