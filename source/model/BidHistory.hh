@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: BidHistory.hh,v 1.1.1.1 2005/08/06 09:52:50 technoplaza Exp $
+// $Id: BidHistory.hh,v 1.2 2005/08/08 10:22:58 technoplaza Exp $
 
 #ifndef _BIDHISTORY_HH_
 #define _BIDHISTORY_HH_
@@ -53,7 +53,7 @@ public:
      *
      * @return The Bid.
      */
-    const Bid &get(int index) const;
+    const Bid &operator[](unsigned int index) const;
     
     /**
      * Gets the number of bids in this BidHistory.
@@ -78,7 +78,7 @@ public:
 };
 
 inline BidHistory::BidHistory() : index(-1), winning(0) {}
-inline const Bid &BidHistory::get(int index) const { return bids[index]; }
+inline const Bid &BidHistory::operator[](unsigned int index) const { return bids[index]; }
 inline unsigned int BidHistory::size() const { return (index + 1); }
 inline const Bid &BidHistory::getWinning() const { return bids[winning]; }
 inline const Bid &BidHistory::getLast() const { return bids[index]; }

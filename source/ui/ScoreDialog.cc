@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: ScoreDialog.cc,v 1.1.1.1 2005/08/06 09:52:52 technoplaza Exp $
+// $Id: ScoreDialog.cc,v 1.2 2005/08/08 12:00:37 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -123,6 +123,6 @@ void ScoreDialog::regenerate(const std::vector<Score> &scores) {
 
 void ScoreDialog::onCloseButton(wxCommandEvent &) {
     Show(false);
-    Game::getInstance().setPause(false);
+    Game::instance().setPause(false);
 }
 

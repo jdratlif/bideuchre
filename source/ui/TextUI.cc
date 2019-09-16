@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: TextUI.cc,v 1.1.1.1 2005/08/06 09:52:53 technoplaza Exp $
+// $Id: TextUI.cc,v 1.3 2005/08/08 12:00:37 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -49,7 +49,7 @@ void TextUI::bid() {
     cout << "---------------------------------------------\n";
     
     for (unsigned int i = 0; i < bids.size(); i++) {
-        const Bid &bid = bids.get(i);
+        const Bid &bid = bids[i];
         cout << "| " << bid.toString().c_str() << '\n';
     }
     
@@ -80,7 +80,7 @@ void TextUI::endTrick() {
 }
 
 void TextUI::endRound() {
-    const std::vector<Score> &scores = Game::getInstance().getScoreHistory();
+    const std::vector<Score> &scores = Game::instance().getScoreHistory();
 
     cout << "---------------------------------------------\n";
     cout << "| Dealer     Us   Them   Bid\n";
@@ -93,7 +93,7 @@ void TextUI::endRound() {
 }
 
 void TextUI::endGame() {
-    bool us = Game::getInstance().isWinner(0);
+    bool us = Game::instance().isWinner(0);
     
     cout << "---------------------------------------------\n";
     cout << "| Winner: " << (us ? "Us" : "Them") << '\n';

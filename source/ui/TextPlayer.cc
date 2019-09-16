@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: TextPlayer.cc,v 1.1.1.1 2005/08/06 09:52:53 technoplaza Exp $
+// $Id: TextPlayer.cc,v 1.2 2005/08/08 10:22:58 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -66,7 +66,7 @@ void TextPlayer::playCard(Trick &trick) {
         
         for (unsigned int j = 0; j < hand.size(); j++) {
             cout << (j + 1) << ") " <<
-                hand.get(j).toString().c_str() << '\n';
+                hand[j].toString().c_str() << '\n';
         }
         
         cout << "\nWhich card? ";
@@ -78,7 +78,7 @@ void TextPlayer::playCard(Trick &trick) {
         
         i = (ch - '0' - 1);
         
-        if (!isValidPlay(hand.get(i), trick)) {
+        if (!isValidPlay(hand[i], trick)) {
             i = -1;
             enum Suit suit = trick.getLead().getSuit(trick.getBid().getTrump());
             
@@ -87,7 +87,7 @@ void TextPlayer::playCard(Trick &trick) {
         }
     }
     
-    trick.play(Play(this, hand.get(i)));
+    trick.play(Play(this, hand[i]));
     hand.remove(i);
 }
 
@@ -107,7 +107,7 @@ void TextPlayer::bid(BidHistory &bids) {
         cout << "---------------------------------------------\n";
         
         for (unsigned int i = 0; i < hand.size(); i++) {
-            cout << "| " << hand.get(i).toString().c_str() << '\n';
+            cout << "| " << hand[i].toString().c_str() << '\n';
         }
         
         cout << "---------------------------------------------\n";
@@ -207,7 +207,7 @@ void TextPlayer::giveLonerCard(const Bid &bid) {
         cout << "---------------------------------------------\n\n";
         
         for (unsigned int i = 0; i < hand.size(); i++) {
-            cout << (i + 1) << ") " << hand.get(i).toString().c_str() << '\n';
+            cout << (i + 1) << ") " << hand[i].toString().c_str() << '\n';
         }
     
         cout << "\nGive which card? ";
@@ -222,7 +222,7 @@ void TextPlayer::giveLonerCard(const Bid &bid) {
             continue;
         }
         
-        cout << "\nGive " << hand.get(card).toString().c_str() << "? [Y/N] ";
+        cout << "\nGive " << hand[card].toString().c_str() << "? [Y/N] ";
         cout.flush();
         
         cin.get(ch);
@@ -251,7 +251,7 @@ void TextPlayer::discard(const Bid &bid) {
         cout << "---------------------------------------------\n\n";
 
         for (unsigned int i = 0; i < hand.size(); i++) {
-            cout << (i + 1) << ") " << hand.get(i).toString().c_str() << '\n';
+            cout << (i + 1) << ") " << hand[i].toString().c_str() << '\n';
         }
     
         cout << "\nDiscard which card? ";
@@ -267,7 +267,7 @@ void TextPlayer::discard(const Bid &bid) {
             continue;
         }
         
-        cout << "\nDiscard " << hand.get(card).toString().c_str() << "? [Y/N] ";
+        cout << "\nDiscard " << hand[card].toString().c_str() << "? [Y/N] ";
         cout.flush();
         
         cin.get(ch);

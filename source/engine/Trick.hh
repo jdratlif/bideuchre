@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: Trick.hh,v 1.1.1.1 2005/08/06 09:52:50 technoplaza Exp $
+// $Id: Trick.hh,v 1.2 2005/08/09 04:04:07 technoplaza Exp $
 
 #ifndef _TRICK_HH_
 #define _TRICK_HH_
@@ -65,6 +65,20 @@ public:
     void play(const Play &play);
     
     /**
+     * Checks if the next person to play on this Trick is the lead player.
+     *
+     * @return true if they are the lead; false otherwise.
+     */
+    bool isFirstPlayer() const;
+    
+    /**
+     * Checks if the next person to play on this Trick is the last player.
+     *
+     * @return true if they are the last player; false otherwise.
+     */
+    bool isLastPlayer() const;
+    
+    /**
      * Gets the Winner of this Trick
      *
      * @return The Winner.
@@ -102,6 +116,8 @@ public:
     int score(const Card &card) const;
 };
 
+inline bool Trick::isFirstPlayer() const { return (plays.size() == 0); }
+inline bool Trick::isLastPlayer() const { return (plays.size() == (bid.isAlone() ? 3 : 5)); }
 inline const Winner &Trick::getWinner() const { return winner; }
 inline const Card &Trick::getLead() const { return lead; }
 inline const Bid &Trick::getBid() const { return bid; }

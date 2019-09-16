@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: Hand.hh,v 1.1.1.1 2005/08/06 09:52:51 technoplaza Exp $
+// $Id: Hand.hh,v 1.2 2005/08/08 10:22:58 technoplaza Exp $
 
 #ifndef _HAND_HH_
 #define _HAND_HH_
@@ -65,7 +65,7 @@ public:
      *
      * @return The selected Card.
      */
-    const Card &get(int index) const;
+    const Card &operator[](unsigned int index) const;
     
     /**
      * Removes a Card from this Hand.
@@ -106,7 +106,7 @@ public:
 
 inline Hand::Hand() : count(0) {}
 inline void Hand::add(const Card &card) { hand[count++] = card; }
-inline const Card &Hand::get(int index) const { return hand[index]; }
+inline const Card &Hand::operator[](unsigned int index) const { return hand[index]; }
 inline void Hand::clear() { count = 0; }
 inline unsigned int Hand::size() const { return count; }
 

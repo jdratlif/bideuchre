@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: GamePanel.cc,v 1.1.1.1 2005/08/06 09:52:52 technoplaza Exp $
+// $Id: GamePanel.cc,v 1.3 2005/08/08 12:00:37 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -109,7 +109,7 @@ GamePanel::GamePanel(wxWindow* parent) : clicks(NULL),
             player[i] = new AIPlayer(i);
         }
         
-        Game::getInstance().addPlayer(player[i]);
+        Game::instance().addPlayer(player[i]);
     }
     
     bridge->setUI(gui);
@@ -128,7 +128,7 @@ GamePanel::~GamePanel() {
 }
 
 void GamePanel::startGame() {
-    Game &game = Game::getInstance();
+    Game &game = Game::instance();
     
     if (game.isPlaying()) {
         int result = wxMessageBox(wxT("Quit current game?"), 
@@ -155,7 +155,7 @@ void GamePanel::startGame() {
 
 void GamePanel::onPaint(wxPaintEvent &) {
     wxBufferedPaintDC dc(this);
-    Game &game = Game::getInstance();
+    Game &game = Game::instance();
     
     dc.SetBackground(wxBrush(GetBackgroundColour()));
     dc.Clear();
@@ -291,7 +291,7 @@ void GamePanel::drawScore(wxBufferedPaintDC &dc) {
     dc.DrawText(str, 5, 40);
     
     for (int i = 0; i < 2; i++) {
-        int score = Game::getInstance().getScore(i);
+        int score = Game::instance().getScore(i);
         
         if (score < 0) {
             score = 0 - score;
@@ -330,7 +330,7 @@ void GamePanel::drawHands(wxBufferedPaintDC &dc) {
             wxImage image;
             
             if ((id == 0) || cheating) {
-                image = hand.get(i).toImage();
+                image = hand[i].toImage();
             } else {
                 image = Card::getBackImage();
             }
@@ -361,7 +361,7 @@ void GamePanel::drawBidding(wxBufferedPaintDC &dc) {
         dc.SetTextForeground(*wxBLACK);
         
         for (unsigned int i = 0; i < bids.size(); i++) {
-            const Bid &bid = bids.get(i);
+            const Bid &bid = bids[i];
             enum Suit trump = bid.getTrump();
             int id = bid.getPlayer()->getID();
             int width = 10;
@@ -431,7 +431,7 @@ void GamePanel::drawCards(wxBufferedPaintDC &dc) {
 void GamePanel::drawWinner(wxBufferedPaintDC &dc) {
     wxString winner = wxT("Winner: ");
     
-    if (Game::getInstance().isWinner(0)) {
+    if (Game::instance().isWinner(0)) {
         winner += wxT("Us");
     } else {
         winner += wxT("Them");
@@ -452,7 +452,7 @@ void GamePanel::onLeftMouseDown(wxMouseEvent &event) {
 }
 
 void GamePanel::onShowScoreDialog(wxCommandEvent &) {
-    scoreDialog->regenerate(Game::getInstance().getScoreHistory());
+    scoreDialog->regenerate(Game::instance().getScoreHistory());
     scoreDialog->CentreOnParent();
     scoreDialog->Show();
 }

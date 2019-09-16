@@ -1,5 +1,5 @@
 dnl Initialize autoconf
-AC_INIT([bideuchre], [0.71], [emuWorks@technoplaza.net])
+AC_INIT([bideuchre], [0.72], [emuWorks@technoplaza.net])
 
 dnl require autoconf >= 2.59
 AC_PREREQ([2.59])

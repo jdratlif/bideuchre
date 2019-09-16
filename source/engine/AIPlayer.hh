@@ -20,15 +20,22 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: AIPlayer.hh,v 1.1.1.1 2005/08/06 09:52:50 technoplaza Exp $
+// $Id: AIPlayer.hh,v 1.4 2005/08/09 04:03:52 technoplaza Exp $
 
 #ifndef _AIPLAYER_HH_
 #define _AIPLAYER_HH_
 
+#include <vector>
+
 #include "engine/Player.hh"
+
+class Trick;
 
 class AIPlayer : public Player {
 private:
+    std::vector<int> plays;
+    const Trick *trick;
+
     /**
      * Scores a Card according to trump.
      *
@@ -40,59 +47,78 @@ private:
     int score(const Card &card, enum Suit trump);
 
     /**
-     * Gets the index of the bower card specified.
+     * Finds all the specified bowers in this AIPlayer's hand.
      *
-     * @param trump The trump suit.
      * @param bower The bower to get.
-     *
-     * @return The card index, or -1 if no such card is found.
      */
-    int getBower(enum Suit trump, enum Bower bower = EUCHRE_ANY_BOWER);
+    void findBower(enum Bower bower = EUCHRE_ANY_BOWER);
     
     /**
-     * Gets the index of a high lead card.
-     *
-     * @param trump The trump suit.
-     *
-     * @return The card index, or -1 if not such card is found.
+     * Finds all the high lead cards.
      */
-    int getHigh(enum Suit trump);
+    void findHigh();
+    
+    /**
+     * Finds all the good lead cards.
+     */
+    void findLead();
     
     /**
      * Checks if the current winning card is likely to take the trick.
      *
-     * @param trick The trick.
-     *
      * @return true if the winning card should take the trick; false otherwise.
      */
-    bool isTrickTaker(Trick &trick);
+    bool isTrickTaker();
     
     /**
      * Checks if the player should try and take the trick.
      *
-     * @param trick The trick.
-     *
      * @return true if the player should take the trick; false otherwise.
      */
-    bool shouldTake(Trick &trick);
+    bool shouldTake();
     
     /**
-     * Gets the index of a card that will take the trick.
+     * Finds all the cards that will take the trick.
      *
-     * @param trick The trick.
-     *
-     * @return The card index, or -1 if no such card is found.
+     * @return true if a trick taker is found; false otherwise.
      */
-    int getTake(Trick &trick);
+    bool findTake();
     
     /**
-     * Gets a loser card from the player's hand.
-     *
-     * @param trick The Trick to play on.
-     *
-     * @return The loser card index.
+     * Finds all the playable loser cards.
      */
-    int getLoser(Trick &trick);
+    void findLoser();
+    
+    /**
+     * Selects the index of the lowest scored card from the play vector.
+     *
+     * @return The card index.
+     */
+    int selectLowest();
+    
+    /**
+     * Selects the index of the highest scored card from the play vector.
+     *
+     * @return The card index.
+     */
+    int selectHighest();
+    
+    /**
+     * Selects the index of the best lead card from the play vector.
+     *
+     * @return The card index.
+     */
+    int selectBestLead();
+    
+    /**
+     * Counts the number of bowers in this AIPlayer's hand.
+     *
+     * @param trump The trump suit.
+     * @param bower The bower.
+     *
+     * @return The count.
+     */
+    int countBower(enum Suit trump, enum Bower bower = EUCHRE_ANY_BOWER);
     
     /**
      * Counts the number of trump in this AIPlayer's hand.
@@ -161,7 +187,6 @@ public:
 
 inline AIPlayer::AIPlayer(int id) : Player(id) {}
 inline AIPlayer::AIPlayer(int id, const wxString &name) : Player(id, name) {}
-inline void AIPlayer::discard(const Bid &) {}
 
 #endif
 

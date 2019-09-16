@@ -10,14 +10,12 @@ minor issues
   - no program icon
   
 AI issues
-  - take trick with trump should take with lowest trump if last player
+  - if you know subsequent players can't overtake you, use lowest card
   - don't count the double ace in suited trump as two tricks
   - don't lead double ace in suited trump
-  - maybe shouldn't bid 6 w/o a right
-  - maybe shouldn't bid 8 w/o real power. Bid Best instead maybe.
-  - can't bid best
-  - AI doesn't understand signals
+  - AI doesn't understand signals (making or receiving)
   - examine other players bids while bidding
+  - trump low if it's first time lead
 
-$Id: todo.txt,v 1.1.1.1 2005/08/06 09:52:49 technoplaza Exp $
+$Id: todo.txt,v 1.3 2005/08/08 10:22:58 technoplaza Exp $
 

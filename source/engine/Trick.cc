@@ -20,12 +20,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: Trick.cc,v 1.1.1.1 2005/08/06 09:52:50 technoplaza Exp $
+// $Id: Trick.cc,v 1.2 2005/08/08 12:00:37 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
 #endif
 
+#include "model/RoundHistory.hh"
 #include "engine/Player.hh"
 #include "engine/Trick.hh"
 #include "bridge/Bridge.hh"
@@ -37,6 +38,8 @@ Trick::Trick(Bridge *bridge, const Bid &bid, int first) : bid(bid),
 }
 
 void Trick::play(const Play &play) {
+    RoundHistory::instance().add(play);
+    
     if (play.getPlayer()->getID() == first) {
         lead = play.getCard();
     }

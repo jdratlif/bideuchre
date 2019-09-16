@@ -1,4 +1,4 @@
-EXTRA_DIST = images/*.bmp
+EXTRA_DIST = images/*.bmp win32/mingwm10.dll
 AUTOMAKE_OPTIONS = subdir-objects
 
 bin_PROGRAMS = bideuchre
@@ -11,6 +11,7 @@ bideuchre_SOURCES = AppConstants.hh \
     model/Deck.cc model/Deck.hh \
     model/Hand.cc model/Hand.hh \
     model/Play.cc model/Play.hh \
+    model/RoundHistory.cc model/RoundHistory.hh \
     model/Score.cc model/Score.hh \
     model/Winner.cc model/Winner.hh \
     engine/AIPlayer.cc engine/AIPlayer.hh \

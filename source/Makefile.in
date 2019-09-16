@@ -54,13 +54,13 @@ am__dirstamp = $(am__leading_dot)dirstamp
 am_bideuchre_OBJECTS = BidEuchreApp.$(OBJEXT) model/Bid.$(OBJEXT) \
 	model/BidHistory.$(OBJEXT) model/Card.$(OBJEXT) \
 	model/Deck.$(OBJEXT) model/Hand.$(OBJEXT) model/Play.$(OBJEXT) \
-	model/Score.$(OBJEXT) model/Winner.$(OBJEXT) \
-	engine/AIPlayer.$(OBJEXT) engine/Game.$(OBJEXT) \
-	engine/GameThread.$(OBJEXT) engine/Player.$(OBJEXT) \
-	engine/Round.$(OBJEXT) engine/Trick.$(OBJEXT) \
-	bridge/Bridge.$(OBJEXT) ui/BidDialog.$(OBJEXT) \
-	ui/EuchreFrame.$(OBJEXT) ui/GamePanel.$(OBJEXT) \
-	ui/GUI.$(OBJEXT) ui/GUIPlayer.$(OBJEXT) \
+	model/RoundHistory.$(OBJEXT) model/Score.$(OBJEXT) \
+	model/Winner.$(OBJEXT) engine/AIPlayer.$(OBJEXT) \
+	engine/Game.$(OBJEXT) engine/GameThread.$(OBJEXT) \
+	engine/Player.$(OBJEXT) engine/Round.$(OBJEXT) \
+	engine/Trick.$(OBJEXT) bridge/Bridge.$(OBJEXT) \
+	ui/BidDialog.$(OBJEXT) ui/EuchreFrame.$(OBJEXT) \
+	ui/GamePanel.$(OBJEXT) ui/GUI.$(OBJEXT) ui/GUIPlayer.$(OBJEXT) \
 	ui/HelpDialog.$(OBJEXT) ui/ScoreDialog.$(OBJEXT) \
 	ui/TextPlayer.$(OBJEXT) ui/TextUI.$(OBJEXT) ui/UI.$(OBJEXT)
 bideuchre_OBJECTS = $(am_bideuchre_OBJECTS)
@@ -79,6 +79,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	model/$(DEPDIR)/BidHistory.Po \
 @AMDEP_TRUE@	model/$(DEPDIR)/Card.Po model/$(DEPDIR)/Deck.Po \
 @AMDEP_TRUE@	model/$(DEPDIR)/Hand.Po model/$(DEPDIR)/Play.Po \
+@AMDEP_TRUE@	model/$(DEPDIR)/RoundHistory.Po \
 @AMDEP_TRUE@	model/$(DEPDIR)/Score.Po model/$(DEPDIR)/Winner.Po \
 @AMDEP_TRUE@	ui/$(DEPDIR)/BidDialog.Po \
 @AMDEP_TRUE@	ui/$(DEPDIR)/EuchreFrame.Po ui/$(DEPDIR)/GUI.Po \
@@ -188,7 +189,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-EXTRA_DIST = images/*.bmp
+EXTRA_DIST = images/*.bmp win32/mingwm10.dll
 AUTOMAKE_OPTIONS = subdir-objects
 bideuchre_SOURCES = AppConstants.hh \
     BidEuchreApp.cc BidEuchreApp.hh \
@@ -199,6 +200,7 @@ bideuchre_SOURCES = AppConstants.hh \
     model/Deck.cc model/Deck.hh \
     model/Hand.cc model/Hand.hh \
     model/Play.cc model/Play.hh \
+    model/RoundHistory.cc model/RoundHistory.hh \
     model/Score.cc model/Score.hh \
     model/Winner.cc model/Winner.hh \
     engine/AIPlayer.cc engine/AIPlayer.hh \
@@ -294,6 +296,8 @@ model/Hand.$(OBJEXT): model/$(am__dirstamp) \
 	model/$(DEPDIR)/$(am__dirstamp)
 model/Play.$(OBJEXT): model/$(am__dirstamp) \
 	model/$(DEPDIR)/$(am__dirstamp)
+model/RoundHistory.$(OBJEXT): model/$(am__dirstamp) \
+	model/$(DEPDIR)/$(am__dirstamp)
 model/Score.$(OBJEXT): model/$(am__dirstamp) \
 	model/$(DEPDIR)/$(am__dirstamp)
 model/Winner.$(OBJEXT): model/$(am__dirstamp) \
@@ -366,6 +370,7 @@ mostlyclean-compile:
 	-rm -f model/Deck.$(OBJEXT)
 	-rm -f model/Hand.$(OBJEXT)
 	-rm -f model/Play.$(OBJEXT)
+	-rm -f model/RoundHistory.$(OBJEXT)
 	-rm -f model/Score.$(OBJEXT)
 	-rm -f model/Winner.$(OBJEXT)
 	-rm -f ui/BidDialog.$(OBJEXT)
@@ -396,6 +401,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@model/$(DEPDIR)/Deck.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@model/$(DEPDIR)/Hand.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@model/$(DEPDIR)/Play.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@model/$(DEPDIR)/RoundHistory.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@model/$(DEPDIR)/Score.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@model/$(DEPDIR)/Winner.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ui/$(DEPDIR)/BidDialog.Po@am__quote@
@@ -520,6 +526,22 @@ model/Play.obj: model/Play.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	depfile='model/$(DEPDIR)/Play.Po' tmpdepfile='model/$(DEPDIR)/Play.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o model/Play.obj `if test -f 'model/Play.cc'; then $(CYGPATH_W) 'model/Play.cc'; else $(CYGPATH_W) '$(srcdir)/model/Play.cc'; fi`
+
+model/RoundHistory.o: model/RoundHistory.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT model/RoundHistory.o -MD -MP -MF "model/$(DEPDIR)/RoundHistory.Tpo" -c -o model/RoundHistory.o `test -f 'model/RoundHistory.cc' || echo '$(srcdir)/'`model/RoundHistory.cc; \
+@am__fastdepCXX_TRUE@	then mv -f "model/$(DEPDIR)/RoundHistory.Tpo" "model/$(DEPDIR)/RoundHistory.Po"; else rm -f "model/$(DEPDIR)/RoundHistory.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/RoundHistory.cc' object='model/RoundHistory.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	depfile='model/$(DEPDIR)/RoundHistory.Po' tmpdepfile='model/$(DEPDIR)/RoundHistory.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o model/RoundHistory.o `test -f 'model/RoundHistory.cc' || echo '$(srcdir)/'`model/RoundHistory.cc
+
+model/RoundHistory.obj: model/RoundHistory.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT model/RoundHistory.obj -MD -MP -MF "model/$(DEPDIR)/RoundHistory.Tpo" -c -o model/RoundHistory.obj `if test -f 'model/RoundHistory.cc'; then $(CYGPATH_W) 'model/RoundHistory.cc'; else $(CYGPATH_W) '$(srcdir)/model/RoundHistory.cc'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "model/$(DEPDIR)/RoundHistory.Tpo" "model/$(DEPDIR)/RoundHistory.Po"; else rm -f "model/$(DEPDIR)/RoundHistory.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='model/RoundHistory.cc' object='model/RoundHistory.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	depfile='model/$(DEPDIR)/RoundHistory.Po' tmpdepfile='model/$(DEPDIR)/RoundHistory.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o model/RoundHistory.obj `if test -f 'model/RoundHistory.cc'; then $(CYGPATH_W) 'model/RoundHistory.cc'; else $(CYGPATH_W) '$(srcdir)/model/RoundHistory.cc'; fi`
 
 model/Score.o: model/Score.cc
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT model/Score.o -MD -MP -MF "model/$(DEPDIR)/Score.Tpo" -c -o model/Score.o `test -f 'model/Score.cc' || echo '$(srcdir)/'`model/Score.cc; \
@@ -873,7 +895,7 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
-	$(mkdir_p) $(distdir)/images
+	$(mkdir_p) $(distdir)/images $(distdir)/win32
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

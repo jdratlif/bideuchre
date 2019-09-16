@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: GUIPlayer.cc,v 1.2 2005/08/06 10:43:33 technoplaza Exp $
+// $Id: GUIPlayer.cc,v 1.4 2005/08/08 12:00:37 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -45,7 +45,7 @@ const wxString GUIPlayer::BEST_NAMES[] =
     };
 
 std::pair<int, bool> GUIPlayer::getCard() {
-    Game &game = Game::getInstance();
+    Game &game = Game::instance();
     unsigned int card;
     bool signal;
     
@@ -116,13 +116,11 @@ void GUIPlayer::playCard(Trick &trick) {
             index = pair.first;
             signal = pair.second;
             
-            if (!Game::getInstance().isPlaying()) {
+            if (!Game::instance().isPlaying()) {
                 return;
             }
             
-            const Card &card = hand.get(index);
-            
-            if (isValidPlay(card, trick)) {
+            if (isValidPlay(hand[index], trick)) {
                 break;
             }
             
@@ -134,7 +132,7 @@ void GUIPlayer::playCard(Trick &trick) {
         panel->requestClicks();
     }
     
-    Card card = hand.get(index);
+    Card card = hand[index];
     hand.remove(index);
     
     trick.play(Play(this, card, signal));
@@ -155,7 +153,7 @@ void GUIPlayer::bid(BidHistory &bids) {
     
     mutex->Lock();
     
-    while (dialog->isBidding() && Game::getInstance().isPlaying()) {
+    while (dialog->isBidding() && Game::instance().isPlaying()) {
         cond->Wait();
     }
     
@@ -178,7 +176,7 @@ void GUIPlayer::giveLonerCard(const Bid &bid) {
     std::pair<int, bool> pair = getCard();
     int card = pair.first;
     
-    if (!Game::getInstance().isPlaying()) {
+    if (!Game::instance().isPlaying()) {
         return;
     }
 
@@ -204,7 +202,7 @@ void GUIPlayer::discard(const Bid &) {
         std::pair<int, bool> pair = getCard();
         int card = pair.first;
         
-        if (!Game::getInstance().isPlaying()) {
+        if (!Game::instance().isPlaying()) {
             return;
         }
         

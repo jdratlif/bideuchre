@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: Game.hh,v 1.1.1.1 2005/08/06 09:52:50 technoplaza Exp $
+// $Id: Game.hh,v 1.2 2005/08/08 12:00:37 technoplaza Exp $
 
 #ifndef _GAME_HH_
 #define _GAME_HH_
@@ -53,12 +53,11 @@ private:
     
     static Game *singleton;
     
-    /// Declare GameThread::Entry a friend of the Game
+    /// Declare GameThread::Entry a friend
     friend void *GameThread::Entry();
     
     /**
-     * Create a new Game. Private to disallow instantiation. Game is a
-     * singleton.
+     * Create a new Game. Private to disallow instantiation; we are a singleton.
      */
     Game();
     
@@ -83,7 +82,7 @@ public:
     /**
      * Gets the singleton instance 
      */
-    static Game &getInstance();
+    static Game &instance();
 
     /**
      * Add a player to the Game.
@@ -167,7 +166,7 @@ public:
     void stop();
 };
 
-inline Game &Game::getInstance() { return *singleton; }
+inline Game &Game::instance() { return *singleton; }
 inline const Player *Game::getPlayer(int index) const { return player[index]; }
 inline const std::vector<Score> &Game::getScoreHistory() const { return scores; }
 inline int Game::getScore(int id) const { return teamScore[id]; }

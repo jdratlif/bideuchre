@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: Round.cc,v 1.1.1.1 2005/08/06 09:52:50 technoplaza Exp $
+// $Id: Round.cc,v 1.2 2005/08/08 12:00:37 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -30,6 +30,7 @@
 #include <wx/utils.h>
 
 #include "model/Bid.hh"
+#include "model/RoundHistory.hh"
 #include "engine/Game.hh"
 #include "engine/Player.hh"
 #include "engine/Round.hh"
@@ -48,7 +49,7 @@ void Round::bid(int first) {
         int bidder = (first + i) % 6;
         player[bidder]->bid(bids);
         
-        if (!Game::getInstance().isPlaying()) {
+        if (!Game::instance().isPlaying()) {
             return;
         }
        
@@ -76,6 +77,8 @@ void Round::bid(int first) {
 void Round::start() {
     const Bid &winning = bids.getWinning();
     int first = winning.getPlayer()->getID();
+    
+    RoundHistory::instance().reset();
 
     for (int i = 0; i < 8; i++) {
         Trick trick(bridge, winning, first);
@@ -94,7 +97,7 @@ void Round::start() {
             
             player[next]->playCard(trick);
             
-            if (!Game::getInstance().isPlaying()) {
+            if (!Game::instance().isPlaying()) {
                 return;
             }
         }

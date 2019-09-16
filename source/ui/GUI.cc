@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: GUI.cc,v 1.2 2005/08/06 10:43:33 technoplaza Exp $
+// $Id: GUI.cc,v 1.3 2005/08/08 12:00:37 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -66,7 +66,7 @@ void GUI::endRound() {
     event.SetEventObject(panel);
     panel->AddPendingEvent(event);
     
-    Game::getInstance().setPause();
+    Game::instance().setPause();
 }
 
 void GUI::endTrick() {

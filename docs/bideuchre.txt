@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
-| Bid Euchre 0.71
+| Bid Euchre 0.72
 | Copyright (C) 2005 John Ratliff
-| http://games.technoplaza.net/
+| http://bideuchre.sourceforge.net/
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
@@ -62,7 +62,23 @@
   If you're building on Windows, I suggest MinGW with msys.
   
 --------------------------------------------------------------------------------
-| 4.0 Contact Information
+| 4.0 Revision History
+--------------------------------------------------------------------------------
+
+  Version 0.72 - August 9, 2005
+    - fixed Windows installer to include necessary DLLs
+    - fixed the homepage URL
+    - AI Player now takes trick with lowest trump if last player
+  
+  Version 0.71 - August 6, 2005
+    - removed useless calls to Update()
+    - added Mac OS-X binaries
+  
+  Version 0.70 - August 2, 2005
+    - initial public release
+  
+--------------------------------------------------------------------------------
+| 5.0 Contact Information
 --------------------------------------------------------------------------------
 
   The author, John Ratliff, can be contacted via email at
@@ -70,7 +86,7 @@
   also use my online feedback form at http://www.technoplaza.net/feedback.php
   
 --------------------------------------------------------------------------------
-| 5.0 License Information
+| 6.0 License Information
 --------------------------------------------------------------------------------
 
   Bid Euchre is licensed under the GNU GPL. It is free software under that

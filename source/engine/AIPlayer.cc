@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: AIPlayer.cc,v 1.1.1.1 2005/08/06 09:52:49 technoplaza Exp $
+// $Id: AIPlayer.cc,v 1.5 2005/08/09 04:03:52 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -65,40 +65,43 @@ int AIPlayer::score(const Card &card, enum Suit trump) {
     return score;
 }
 
-int AIPlayer::getBower(enum Suit trump, enum Bower bower) {
+void AIPlayer::findBower(enum Bower bower) {
+    enum Suit trump = trick->getBid().getTrump();
+    
     for (unsigned int i = 0; i < hand.size(); i++) {
-        if (hand.get(i).isBower(trump, bower)) {
-            return i;
+        if (hand[i].isBower(trump, bower)) {
+            plays.push_back(i);
         }
     }
-    
-    return -1;
 }
 
-int AIPlayer::getHigh(enum Suit trump) {
+void AIPlayer::findHigh() {
+    enum Suit trump = trick->getBid().getTrump();
+    
     for (unsigned int i = 0; i < hand.size(); i++) {
-        const Card &card = hand.get(i);
-        
-        if (card.getSuit(trump) != trump) {
-            if (card.getFace() == ((trump == LOW) ? NINE : ACE)) {
-                return i;
+        if (hand[i].getSuit(trump) != trump) {
+            if (hand[i].getFace() == ((trump == LOW) ? NINE : ACE)) {
+                plays.push_back(i);
             }
         }
     }
-    
-    return -1;
 }
 
-bool AIPlayer::isTrickTaker(Trick &trick) {
-    const Card &card = trick.getWinner().getPlay().getCard();
-    enum Suit trump = trick.getBid().getTrump();
+void AIPlayer::findLead() {
+    findBower(EUCHRE_RIGHT_BOWER);
+    findHigh();
+}
+
+bool AIPlayer::isTrickTaker() {
+    const Card &card = trick->getWinner().getPlay().getCard();
+    enum Suit trump = trick->getBid().getTrump();
     
     if (card.isBower(trump, EUCHRE_RIGHT_BOWER)) {
         return true;
     }
     
     if (card.getSuit(trump) == trump) {
-        if (trick.getLead().getSuit(trump) != trump) {
+        if (trick->getLead().getSuit(trump) != trump) {
             return true;
         }
     } else {
@@ -110,78 +113,141 @@ bool AIPlayer::isTrickTaker(Trick &trick) {
     return false;
 }
 
-bool AIPlayer::shouldTake(Trick &trick) {
-    const Winner &winner = trick.getWinner();
+bool AIPlayer::shouldTake() {
+    const Winner &winner = trick->getWinner();
     
     if (getTeam() != winner.getPlay().getPlayer()->getTeam()) {
         return true;
     }
     
-    if (!isTrickTaker(trick)) {
+    if (!isTrickTaker()) {
         return true;
     }
     
     return false;
 }
 
-int AIPlayer::getTake(Trick &trick) {
-    int score = trick.getWinner().getScore();
+bool AIPlayer::findTake() {
+    bool found = false;
+    int score = trick->getWinner().getScore();
     
     for (unsigned int i = 0; i < hand.size(); i++) {
-        const Card &card = hand.get(i);
+        if ((trick->score(hand[i]) > score) && isValidPlay(hand[i], *trick)) {
+            plays.push_back(i);
+            found = true;
+        }
+    }
+    
+    return found;
+}
+
+void AIPlayer::findLoser() {
+    for (unsigned int i = 0; i < hand.size(); i++) {
+        if (isValidPlay(hand[i], *trick)) {
+            plays.push_back(i);
+        }
+    }
+}
+
+int AIPlayer::selectLowest() {
+    int index = 0, lowest = 9999;
+    
+    for (unsigned int i = 0; i < plays.size(); i++) {
+        int score = this->score(hand[plays[i]], trick->getBid().getTrump());
         
-        if ((trick.score(card) > score) && isValidPlay(card, trick)) {
-            return i;
+        if (score < lowest) {
+            lowest = score;
+            index = plays[i];
+        }
+    }
+    
+    return index;
+}
+
+int AIPlayer::selectHighest() {
+    int index = 0, highest = 0;
+    
+    for (unsigned int i = 0; i < plays.size(); i++) {
+        int score = this->score(hand[plays[i]], trick->getBid().getTrump());
+        
+        if (score > highest) {
+            highest = score;
+            index = plays[i];
+        }
+    }
+    
+    return index;
+}
+
+int AIPlayer::selectBestLead() {
+    enum Suit trump = trick->getBid().getTrump();
+    
+    // look for right bowers first
+    for (unsigned int i = 0; i < plays.size(); i++) {
+        if (hand[plays[i]].isBower(trump, EUCHRE_RIGHT_BOWER)) {
+            return plays[i];
+        }
+    }
+    
+    // then high cards (aces or nines if no-trump low)
+    for (unsigned int i = 0; i < plays.size(); i++) {
+        if (hand[plays[i]].getFace() == ((trump == LOW) ? NINE : ACE)) {
+            return plays[i];
         }
     }
     
     return -1;
 }
 
-int AIPlayer::getLoser(Trick &trick) {
-    int card = 0, lowest = 9999;
-    
-    for (unsigned int i = 0; i < hand.size(); i++) {
-        int score = this->score(hand.get(i), trick.getBid().getTrump());
-        
-        if ((score < lowest) && isValidPlay(hand.get(i), trick)) {
-            lowest = score;
-            card = i;
-        }
-    }
-    
-    return card;
-}
-
 void AIPlayer::playCard(Trick &trick) {
-    enum Suit trump = trick.getBid().getTrump();
-    int card = getLoser(trick), temp;
+    int card = -1;
     
-    if (trick.getPlayHistory().size() == 0) {
-        if ((temp = getBower(trump, EUCHRE_RIGHT_BOWER)) != -1) {
-            card = temp;
-        } else if ((temp = getHigh(trump)) != -1) {
-            card = temp;
-        }
+    this->trick = &trick;
+    plays.clear();
+    
+    if (trick.isFirstPlayer()) {
+        findLead();
+        card = selectBestLead();
     } else {
-        if (shouldTake(trick)) {
-            if ((temp = getTake(trick)) != -1) {
-                card = temp;
+        if (shouldTake()) {
+            if (findTake()) {
+                if (trick.isLastPlayer()) {
+                    card = selectLowest();
+                } else {
+                    card = selectHighest();
+                }
             }
         }
     }
     
-    Card copy = hand.get(card);
+    if (card == -1) {
+        findLoser();
+        card = selectLowest();
+    }
+    
+    Card copy = hand[card];
     hand.remove(card);
     
     trick.play(Play(this, copy));
+}
+
+int AIPlayer::countBower(enum Suit trump, enum Bower bower) {
+    int count = 0;
+    
+    for (unsigned int i = 0; i < hand.size(); i++) {
+        if (hand[i].isBower(trump, bower)) {
+            ++count;
+        }
+    }
+    
+    return count;
 }
 
 int AIPlayer::countTrump(enum Suit trump) {
     int count = 0;
     
     for (unsigned int i = 0; i < hand.size(); i++) {
-        if (trump == hand.get(i).getSuit(trump)) {
+        if (trump == hand[i].getSuit(trump)) {
             ++count;
         }
     }
@@ -193,10 +259,8 @@ int AIPlayer::countHigh(enum Suit trump) {
     int count = 0;
     
     for (unsigned int i = 0; i < hand.size(); i++) {
-        const Card &card = hand.get(i);
-        
-        if (card.getSuit(trump) != trump) {
-            if (card.getFace() == ((trump == LOW) ? NINE : ACE)) {
+        if (hand[i].getSuit(trump) != trump) {
+            if (hand[i].getFace() == ((trump == LOW) ? NINE : ACE)) {
                 ++count;
             }
         }
@@ -209,6 +273,7 @@ void AIPlayer::bid(BidHistory &bids) {
     std::pair<int, int> trump[6];
     std::pair<int, int> count(0, 0);
     enum Suit best = LOW;
+    bool alone = false;
     
     for (int i = LOW; i <= HIGH; i++) {
         enum Suit suit = static_cast<enum Suit>(i);
@@ -216,10 +281,12 @@ void AIPlayer::bid(BidHistory &bids) {
         trump[i].first = countTrump(suit);
         trump[i].second = countHigh(suit);
         
-        if (getBower(suit) == -1) {
+        if (countBower(suit) == 0) {
+            // no bowers; time to back off
             trump[i].first -= 2;
         } else {
-            if (getBower(suit, EUCHRE_RIGHT_BOWER) == -1) {
+            if (countBower(suit, EUCHRE_RIGHT_BOWER) == 0) {
+                // no right bowers; back off a little
                 --trump[i].first;
             }
         }
@@ -229,6 +296,7 @@ void AIPlayer::bid(BidHistory &bids) {
         
         if (b >= a) {
             if (trump[i].first > count.first) {
+                // favor trump over high cards
                 best = suit;
                 count = trump[i];
             }
@@ -237,11 +305,38 @@ void AIPlayer::bid(BidHistory &bids) {
 
     const Bid &winning = bids.getWinning();
     Bid bid(this);
-    int a = count.first + count.second;    
+    int tricks = count.first + count.second;
+
+    if (tricks == 6) {
+        // don't bid 6 w/o a right
+        if (countBower(best, EUCHRE_RIGHT_BOWER) == 0) {
+            tricks--;
+        }
+    } else if (tricks > 6) {
+        int right = countBower(best, EUCHRE_RIGHT_BOWER);
+        int left = countBower(best, EUCHRE_LEFT_BOWER);
+        
+        if ((right == 2) || ((right == 1) && (left > 0))) {
+            // both rights, or right + left
+            // time to go alone
+            
+            tricks = 8;
+            alone = true;
+        }
+        
+        if (right == 0) {
+            // no rights; time to back off
+            tricks -= 2;
+        } else if ((right == 1) && (left == 0)) {
+            // one right, no lefts; back off a little
+            --tricks;
+        }
+    }
     
-    if (a > winning.getTricks()) {
+    if (tricks > winning.getTricks()) {
         bid.setTrump(best);
-        bid.setTricks(a);
+        bid.setTricks(tricks);
+        bid.setAlone(alone);
     }
     
     bids.add(bid);
@@ -251,7 +346,7 @@ void AIPlayer::giveLonerCard(const Bid &bid) {
     int card = 0, highest = 0;
     
     for (unsigned int i = 0; i < hand.size(); i++) {
-        int score = this->score(hand.get(i), bid.getTrump());
+        int score = this->score(hand[i], bid.getTrump());
         
         if (score > highest) {
             highest = score;
@@ -262,5 +357,22 @@ void AIPlayer::giveLonerCard(const Bid &bid) {
     Player *bidder = const_cast<Player *>(bid.getPlayer());
     giveCard(bidder, card);
     hand.clear();
+}
+
+void AIPlayer::discard(const Bid &bid) {
+    for (int j = 0; j < 2; j++) {
+        int card = 0, lowest = 9999;
+        
+        for (unsigned int i = 0; i < hand.size(); i++) {
+            int score = this->score(hand[i], bid.getTrump());
+            
+            if (score < lowest) {
+                card = i;
+                lowest = score;
+            }
+        }
+        
+        hand.remove(card);
+    }
 }
 

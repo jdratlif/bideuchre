@@ -8,7 +8,7 @@
 !include "MUI.nsh"
 
 Name "Bid Euchre"
-OutFile "bideuchre-0.71.exe"
+OutFile "bideuchre-0.72.exe"
 InstallDir "$PROGRAMFILES\Bid Euchre"
 
 !define MUI_ABORTWARNING
@@ -30,6 +30,7 @@ Var SM_FOLDER
 Section "Bid Euchre"
     SetOutPath $INSTDIR
     File source\bideuchre.exe
+    File source\win32\mingwm10.dll
     
     SetOutPath "$INSTDIR\images"
     File source\images\*.bmp

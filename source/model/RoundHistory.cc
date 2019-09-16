@@ -20,42 +20,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: Deck.hh,v 1.2 2005/08/08 10:22:58 technoplaza Exp $
+// $Id: RoundHistory.cc,v 1.1 2005/08/08 12:00:37 technoplaza Exp $
 
-#ifndef _DECK_HH_
-#define _DECK_HH_
-
-#include "model/Card.hh"
-
-/**
- * Class representing a Bid Euchre deck.
- */
-class Deck {
-private:
-    Card deck[48];
-
-public:
-    /**
-     * Creates a new Deck object.
-     */
-    Deck();
-    
-    /**
-     * Shuffles this Deck.
-     */
-    void shuffle();
-    
-    /**
-     * Gets a Card from this Deck.
-     *
-     * @param index The Card to get.
-     *
-     * @return The selected Card.
-     */
-    const Card &operator[](unsigned int index) const;
-};
-
-inline const Card &Deck::operator[](unsigned int index) const { return deck[index]; }
-
+#ifdef HAVE_CONFIG_H
+    #include <config.h>
 #endif
+
+#include "model/RoundHistory.hh"
+
+RoundHistory *RoundHistory::singleton = new RoundHistory();
+
+void RoundHistory::reset() {
+    played.clear(); 
+}
+
+void RoundHistory::add(const Play &play) {
+    played.push_back(play.getCard());
+}
 

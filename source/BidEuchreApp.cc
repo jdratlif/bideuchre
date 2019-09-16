@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: BidEuchreApp.cc,v 1.1.1.1 2005/08/06 09:52:49 technoplaza Exp $
+// $Id: BidEuchreApp.cc,v 1.2 2005/08/08 12:00:36 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -60,7 +60,7 @@ BidEuchreApp::BidEuchreApp() {
     APP_NAME = new wxString(wxT(PACKAGE_NAME));
     APP_VERSION = new wxString(wxT(PACKAGE_VERSION));
     APP_COPYRIGHT = new wxString(wxT("Copyright (C) 2005 John David Ratliff"));
-    APP_URL = new wxString(wxT("http://games.technoplaza.net/"));
+    APP_URL = new wxString(wxT("http://bideuchre.sourceforge.net/"));
 }
 
 BidEuchreApp::~BidEuchreApp() {
@@ -76,7 +76,7 @@ BidEuchreApp::~BidEuchreApp() {
 bool BidEuchreApp::OnInit() {
     if (argc == 2) {
         if (strcmp(argv[1], "--text") == 0) {
-            Game &game = Game::getInstance();
+            Game &game = Game::instance();
             TextUI tui;
             Bridge bridge;
             Player *player[6];

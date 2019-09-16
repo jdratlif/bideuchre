@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-// $Id: Player.cc,v 1.1.1.1 2005/08/06 09:52:50 technoplaza Exp $
+// $Id: Player.cc,v 1.2 2005/08/08 10:22:58 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -39,7 +39,7 @@ const wxString Player::NAMES[] =
     };
 
 void Player::giveCard(Player *player, int card) {
-    player->hand.add(hand.get(card));
+    player->hand.add(hand[card]);
     hand.remove(card);
 }
 
@@ -68,7 +68,7 @@ void Player::deal(Deck &deck, Player **player) {
             int dealee = (j + id + 1) % 6;
             
             for (int deal = 0; deal < ((i < 2) ? 3 : 2); deal++) {
-                player[dealee]->hand.add(deck.getCard(card++));
+                player[dealee]->hand.add(deck[card++]);
             }
         }
     }
